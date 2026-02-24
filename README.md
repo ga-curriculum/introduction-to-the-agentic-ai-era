@@ -56,6 +56,8 @@ This architecture is **stateless** and **single-turn**: the model produces text 
 
 Agentic AI introduces **autonomy and execution**:
 
+> An AI agent is a system that perceives its environment, reasons about its goals, and takes actions to maximize objective fulfillment over time.
+
 <img width="494" height="242" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/297cfc38-4c49-47af-8193-074048cccbbf" />
 
 ```
