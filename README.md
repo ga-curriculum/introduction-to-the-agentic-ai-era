@@ -208,8 +208,7 @@ After redesigning with API tool integration, session memory, a decision loop, an
 2. What is the minimum a system needs to qualify as a true AI agent, as opposed to an automated tool?
 3. What industry not covered in this session do you think has the highest potential for Agentic AI? Why?
 
-> Next session: **How Agents Work** — we'll go deeper into the perceive–act loop and connect classical agent theory to modern LLM-powered architectures.
-
+Next session: **Anatomy of an Agent**
 ---
 
 ## Resources
