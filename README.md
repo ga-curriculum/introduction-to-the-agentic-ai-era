@@ -203,10 +203,10 @@ After redesigning with API tool integration, session memory, a decision loop, an
 
 ## 6. Wrap-Up & Reflection (5 min)
 
-
-1. In one sentence, what is the defining difference between Generative AI and Agentic AI?
-2. What is the minimum a system needs to qualify as a true AI agent, as opposed to an automated tool?
-3. What industry not covered in this session do you think has the highest potential for Agentic AI? Why?
+### Key Takeaways
+- Generative AI Produces Text. Agentic AI Produces Outcomes.
+- An Agent Is Defined by Action and Persistence
+- Production Failures Are Architectural
 
 Next session: **Anatomy of an Agent**
 ---
