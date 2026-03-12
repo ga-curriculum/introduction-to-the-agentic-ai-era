@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agentic AI Lab — General Assembly BAA 1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:   #0d0d0d;
+  --black2:  #1a1a1a;
+  --black3:  #252525;
+  --black4:  #333333;
+  --line:    #2e2e2e;
+  --line2:   #404040;
+  --gray-dk: #555;
+  --gray:    #888;
+  --gray-lt: #bbb;
+  --white:   #fff;
+  --off-wh:  #f5f5f5;
+  --GA-red:  #e8333a;
+  --GA-red2: #ff4a50;
+  --yellow:  #f5c518;
+  --green:   #22c55e;
+  --blue:    #3b82f6;
+  --r:4px;--r-lg:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);font-size:16px;line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--black2)}
+::-webkit-scrollbar-thumb{background:var(--black4);border-radius:3px}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:500;background:var(--black);border-bottom:2px solid var(--GA-red);display:flex;align-items:stretch;height:58px}
+.ga-logo{display:flex;align-items:center;gap:10px;padding:0 20px;border-right:1px solid var(--line);flex-shrink:0;text-decoration:none;cursor:pointer}
+.ga-mark{width:32px;height:32px;background:var(--GA-red);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.05em;color:#fff;border-radius:2px;flex-shrink:0}
+.ga-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--gray-lt);text-transform:uppercase;line-height:1.2}
+.ga-name span{display:block;font-size:10px;color:var(--gray);font-weight:600}
+.tab-bar{display:flex;align-items:stretch;overflow-x:auto;flex:1;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:6px;padding:0 18px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--gray);letter-spacing:.02em;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .15s,border-color .15s;position:relative;top:2px}
+.tab:hover{color:var(--white)}
+.tab.active{color:var(--white);border-bottom-color:var(--GA-red)}
+.hd-end{display:flex;align-items:center;padding:0 18px;border-left:1px solid var(--line);flex-shrink:0}
+.prog-chip{background:var(--GA-red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;white-space:nowrap}
+
+/* LAYOUT */
+.section{display:none}
+.section.active{display:block}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+
+/* TYPOGRAPHY */
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--GA-red);margin-bottom:10px;display:block}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.4rem,6vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;color:#fff;margin-bottom:16px}
+h1 .red{color:var(--GA-red)}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#fff;margin-bottom:8px}
+h2 .red{color:var(--GA-red)}
+h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px}
+.lead{font-size:1.05rem;color:var(--gray-lt);line-height:1.7;margin-bottom:28px;max-width:640px}
+.body-t{font-size:.95rem;color:var(--gray-lt);line-height:1.7}
+.mono{font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.hr{height:1px;background:var(--line);margin:36px 0}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r);font-family:'Barlow',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+.btn-red{background:var(--GA-red);color:#fff;border-color:var(--GA-red)}
+.btn-red:hover{background:var(--GA-red2);border-color:var(--GA-red2);transform:translateY(-1px)}
+.btn-green{background:var(--green);color:var(--black);border-color:var(--green)}
+.btn-green:hover{background:#16a34a;border-color:#16a34a;transform:translateY(-1px)}
+
+/* CARD */
+.card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:16px}
+.card-rb{border-top:3px solid var(--GA-red)}
+
+/* BADGE */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.b-red{background:rgba(232,51,58,.18);color:var(--GA-red)}
+.b-yellow{background:rgba(245,197,24,.18);color:var(--yellow)}
+.b-green{background:rgba(34,197,94,.18);color:var(--green)}
+.b-blue{background:rgba(59,130,246,.18);color:var(--blue)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .35s ease both}
+.a2{animation:fadeUp .35s .1s ease both}
+.a3{animation:fadeUp .35s .2s ease both}
+
+/* ── INTRO ── */
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--black3);border:1px solid var(--line);border-radius:var(--r);padding:6px 14px;margin-bottom:20px;font-size:12px;font-weight:600;color:var(--gray-lt);letter-spacing:.04em}
+.hero-kicker .dot{width:8px;height:8px;background:var(--GA-red);border-radius:50%;flex-shrink:0}
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:32px}
+.obj-card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;display:flex;gap:14px;align-items:flex-start}
+.obj-num{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--GA-red);line-height:1;flex-shrink:0}
+.obj-body{font-size:.9rem;color:var(--gray-lt);line-height:1.55;padding-top:4px}
+.roadmap{display:flex;flex-direction:column}
+.rm-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.rm-item:last-child{border-bottom:none}
+.rm-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;border:2px solid var(--line);background:var(--black3);color:var(--gray);transition:all .25s}
+.rm-dot.done{background:var(--green);border-color:var(--green);color:var(--black)}
+.rm-dot.active{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.rm-label{font-size:.95rem;font-weight:600;color:var(--gray);transition:color .2s;padding-top:6px}
+.rm-label.active{color:#fff}
+.rm-label.done{color:var(--green);text-decoration:line-through}
+.rm-sub{font-size:.8rem;color:var(--gray-dk);margin-top:2px}
+
+/* ── CONCEPTS ── */
+.cc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:28px}
+.cc{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;cursor:pointer;transition:border-color .18s,transform .18s;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--GA-red);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.cc:hover::before,.cc.open::before{transform:scaleX(1)}
+.cc:hover{border-color:var(--black4);transform:translateY(-2px)}
+.cc.open{border-color:var(--GA-red)}
+.cc-icon{font-size:2rem;margin-bottom:12px;display:block}
+.cc h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px}
+.cc-teaser{font-size:.85rem;color:var(--gray);margin-bottom:0}
+.cc-body{font-size:.9rem;color:var(--gray-lt);line-height:1.65;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:none}
+.cc.open .cc-body{display:block}
+.cc-hint{font-size:.75rem;color:var(--gray-dk);margin-top:8px;font-style:italic}
+.cc.open .cc-hint{display:none}
+
+.cmp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+@media(max-width:580px){.cmp-wrap{grid-template-columns:1fr}}
+.cmp-col{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.cmp-head{padding:14px 20px;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.cmp-head.asst{background:rgba(136,136,136,.1);color:var(--gray-lt)}
+.cmp-head.agnt{background:rgba(232,51,58,.12);color:var(--GA-red)}
+.cmp-row{padding:12px 20px;font-size:.9rem;color:var(--gray-lt);border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.cmp-row .ic{font-size:.9rem;flex-shrink:0}
+
+/* ── LOOP ── */
+.loop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:560px){.loop-grid{grid-template-columns:repeat(2,1fr)}}
+.ls{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:18px 14px;text-align:center;cursor:pointer;transition:all .18s}
+.ls:hover{border-color:var(--line2)}
+.ls.active{border-color:var(--GA-red);background:rgba(232,51,58,.07)}
+.ls-num{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--gray-dk);margin-bottom:6px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
+.ls-icon{font-size:1.8rem;margin-bottom:8px;display:block}
+.ls-label{font-size:.85rem;font-weight:700;color:var(--gray-lt)}
+.ls.active .ls-label{color:var(--GA-red)}
+.loop-repeat{grid-column:1/-1;background:rgba(232,51,58,.1);border:1px dashed var(--GA-red);border-radius:var(--r);padding:8px 16px;text-align:center;font-size:.8rem;font-weight:700;color:var(--GA-red);font-family:'Barlow Condensed',sans-serif;letter-spacing:.08em}
+.loop-detail{background:var(--black2);border:1px solid var(--line);border-left:4px solid var(--GA-red);border-radius:var(--r-lg);padding:22px 24px;font-size:.98rem;color:var(--gray-lt);line-height:1.7;min-height:90px;transition:all .2s;margin-bottom:24px}
+.loop-detail strong{color:#fff}
+.ex-panel{background:var(--black3);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.ex-head{background:rgba(232,51,58,.1);border-bottom:1px solid var(--line);padding:12px 20px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--GA-red)}
+.ex-body{padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.ex-row{display:flex;gap:12px;align-items:flex-start}
+.ex-tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;background:var(--GA-red);color:#fff;padding:2px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;font-weight:500;white-space:nowrap}
+.ex-text{font-size:.9rem;color:var(--gray-lt);line-height:1.5}
+
+/* ── QUIZ ── */
+.qz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.qz-meta span{font-size:.85rem;color:var(--gray);font-weight:500}
+.prog-bar{height:4px;background:var(--black3);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.prog-fill{height:100%;background:var(--GA-red);border-radius:2px;transition:width .4s ease}
+.quiz-q{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:700;line-height:1.3;color:#fff;margin-bottom:20px;letter-spacing:-.01em}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.q-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:14px;font-size:.95rem;color:var(--gray-lt);transition:all .16s;text-align:left;width:100%}
+.q-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff;background:rgba(232,51,58,.05)}
+.q-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.q-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.08);color:#fff}
+.q-opt.disabled{cursor:default}
+.opt-k{width:30px;height:30px;border-radius:6px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--gray);transition:all .16s}
+.q-opt.correct .opt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.q-opt.wrong .opt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.q-opt:hover:not(.disabled) .opt-k{border-color:var(--GA-red);color:var(--GA-red)}
+.fb-box{display:none;border-radius:var(--r-lg);padding:14px 18px;font-size:.92rem;line-height:1.6;margin-bottom:14px}
+.fb-box.show{display:flex;gap:10px;align-items:flex-start}
+.fb-box.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.fb-box.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.3);color:#fca5a5}
+.fb-icon{font-size:1.1rem;flex-shrink:0}
+.qz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.qz-score{font-size:.85rem;color:var(--gray);font-family:'JetBrains Mono',monospace}
+
+/* ── BUILDER ── */
+.f-lbl{display:block;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:6px}
+.f-hint{font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0;font-size:.78rem;margin-left:4px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:520px){.f-row{grid-template-columns:1fr}}
+.f-group{margin-bottom:14px}
+input[type=text],select,textarea{width:100%;background:var(--black3);border:1.5px solid var(--line);border-radius:var(--r);padding:11px 14px;font-family:'Barlow',sans-serif;font-size:.95rem;color:#fff;outline:none;resize:none;transition:border-color .15s,box-shadow .15s;line-height:1.5}
+input::placeholder,textarea::placeholder{color:var(--gray-dk)}
+input:focus,select:focus,textarea:focus{border-color:var(--GA-red);box-shadow:0 0 0 3px rgba(232,51,58,.12)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+select option{background:var(--black2)}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s;user-select:none;border:1.5px solid var(--line);background:var(--black3);color:var(--gray)}
+.chip:hover{border-color:var(--GA-red);color:#fff}
+.chip.on{background:rgba(232,51,58,.15);border-color:var(--GA-red);color:var(--GA-red)}
+.spec-out{display:none;background:var(--black3);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#22c55e;line-height:1.85;white-space:pre-wrap;margin-top:16px}
+.spec-out.show{display:block;animation:fadeUp .3s ease}
+
+/* ── RISKS ── */
+.risk-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.risk-item{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;display:flex;align-items:flex-start;gap:16px}
+.risk-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.risk-body h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:4px}
+.risk-body p{font-size:.88rem;color:var(--gray-lt);line-height:1.55}
+.risk-lvl{margin-left:auto;flex-shrink:0;align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;padding:3px 9px;border-radius:3px}
+.lvl-crit{background:rgba(232,51,58,.15);color:var(--GA-red)}
+.lvl-high{background:rgba(245,197,24,.15);color:var(--yellow)}
+.lvl-med{background:rgba(59,130,246,.15);color:var(--blue)}
+.chk-list{display:flex;flex-direction:column;gap:2px}
+.chk-item{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:var(--r);cursor:pointer;transition:background .15s}
+.chk-item:hover{background:var(--black3)}
+.chk-box{width:22px;height:22px;border:2px solid var(--line);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:all .2s}
+.chk-box.ticked{background:var(--green);border-color:var(--green);color:var(--black)}
+.chk-txt{font-size:.92rem;color:var(--gray-lt);transition:color .2s}
+.chk-txt.ticked{color:var(--gray-dk);text-decoration:line-through}
+
+/* ── REFLECT ── */
+.r-q{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.01em}
+.r-hint{font-size:.85rem;color:var(--gray);margin-bottom:10px;line-height:1.55}
+.r-area{width:100%;background:var(--black3);border:1.5px solid var(--line);border-radius:var(--r);padding:14px 16px;min-height:130px;font-family:'Barlow',sans-serif;font-size:.95rem;color:#fff;outline:none;resize:vertical;transition:border-color .15s,box-shadow .15s;line-height:1.65}
+.r-area:focus{border-color:var(--GA-red);box-shadow:0 0 0 3px rgba(232,51,58,.12)}
+.r-area::placeholder{color:var(--gray-dk)}
+.success-box{display:none;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:var(--r-lg);padding:24px;color:#86efac;font-size:.95rem;line-height:1.7}
+.success-box.show{display:block;animation:fadeUp .4s ease}
+.success-box strong{color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ga-logo" onclick="nav('intro')">
+    <div class="ga-mark">GA</div>
+    <div class="ga-name">General Assembly<span>Build AI Agents · BAA 1.0</span></div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active"  onclick="nav('intro')"    id="t-intro">⬡ Overview</div>
+    <div class="tab"         onclick="nav('concepts')" id="t-concepts">◈ Concepts</div>
+    <div class="tab"         onclick="nav('loop')"     id="t-loop">↻ Agent Loop</div>
+    <div class="tab"         onclick="nav('quiz')"     id="t-quiz">◇ Knowledge Check</div>
+    <div class="tab"         onclick="nav('builder')"  id="t-builder">⌖ Build</div>
+    <div class="tab"         onclick="nav('risks')"    id="t-risks">⚑ Risks</div>
+    <div class="tab"         onclick="nav('reflect')"  id="t-reflect">✎ Exit Ticket</div>
+  </div>
+  <div class="hd-end"><div class="prog-chip" id="progressChip">0 / 5</div></div>
+</header>
+
+<!-- INTRO -->
+<div class="section active" id="s-intro">
+  <div class="wrap">
+    <div class="a1" style="padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:36px">
+      <div class="hero-kicker"><div class="dot"></div>Hands-On Lab &nbsp;·&nbsp; Module 1 &nbsp;·&nbsp; BAA 1.0</div>
+      <h1>Introduction to the<br/><span class="red">Agentic AI Era</span></h1>
+      <p class="lead">Move beyond generative chatbots. In this lab you'll explore how autonomous AI agents perceive, decide, and act — and what it takes to design them responsibly.</p>
+      <button class="btn btn-red" onclick="nav('concepts')">Start Lab →</button>
+    </div>
+
+    <span class="eyebrow">Learning Objectives</span>
+    <div class="obj-grid a2">
+      <div class="obj-card"><div class="obj-num">01</div><div class="obj-body">Define Agentic AI and distinguish it from traditional generative AI systems.</div></div>
+      <div class="obj-card"><div class="obj-num">02</div><div class="obj-body">Differentiate autonomous agents from simple automated tools and chatbots.</div></div>
+      <div class="obj-card"><div class="obj-num">03</div><div class="obj-body">Identify real-world applications across healthcare, finance, and customer service.</div></div>
+    </div>
+
+    <div class="hr"></div>
+    <span class="eyebrow">Your Lab Roadmap</span>
+    <div class="card a3">
+      <div class="roadmap">
+        <div class="rm-item"><div class="rm-dot active" id="dot-concepts">1</div><div><div class="rm-label active" id="lbl-concepts">Explore Core Concepts</div><div class="rm-sub">Key vocabulary · 5 pillars of autonomy · assistant vs. agent</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-loop">2</div><div><div class="rm-label" id="lbl-loop">Map the Agent Loop</div><div class="rm-sub">Interactive 6-step loop with a healthcare example</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-quiz">3</div><div><div class="rm-label" id="lbl-quiz">Pass the Knowledge Check</div><div class="rm-sub">7 questions · 70% to pass</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-builder">4</div><div><div class="rm-label" id="lbl-builder">Design Your First Agent</div><div class="rm-sub">Goal · Perception · Tools · Guardrails · HITL</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-risks">5</div><div><div class="rm-label" id="lbl-risks">Assess the Risks</div><div class="rm-sub">Limitations · security threats · responsible design checklist</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-reflect">—</div><div><div class="rm-label" id="lbl-reflect">Submit Exit Ticket</div><div class="rm-sub">3 reflection prompts — your lab deliverable</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPTS -->
+<div class="section" id="s-concepts">
+  <div class="wrap">
+    <span class="eyebrow">Section 01</span>
+    <h2>Core <span class="red">Concepts</span></h2>
+    <p class="lead">Click each card to reveal the full concept. Remove any one of the five pillars and autonomy collapses.</p>
+    <div class="cc-grid">
+      <div class="cc" onclick="toggleCC(this,'c-goal')"><span class="cc-icon">🎯</span><h3>Goal Orientation</h3><p class="cc-teaser">The agent always has an objective it's working toward.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-goal">A true agent has an objective. Without a goal, a system is reactive — just responding to prompts with no through-line. Agents pursue outcomes across multiple steps, choosing actions based on what will best advance toward that goal.</div></div>
+      <div class="cc" onclick="toggleCC(this,'c-dec')"><span class="cc-icon">🤔</span><h3>Decision-Making</h3><p class="cc-teaser">Agents evaluate options and choose a path.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-dec">Agents can evaluate options and choose a path. This isn't just "pick from a list" — it's reasoning under uncertainty about what action to take next, weighing trade-offs, and committing to a course of action.</div></div>
+      <div class="cc" onclick="toggleCC(this,'c-act')"><span class="cc-icon">⚡</span><h3>Action Execution</h3><p class="cc-teaser">Tools give agents the ability to act on the world.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-act">Words without hands are just advice. Tools give agents real-world impact: query databases, run code, send emails, trigger workflows, modify systems. Without tools, even the smartest LLM is just generating text.</div></div>
+      <div class="cc" onclick="toggleCC(this,'c-iter')"><span class="cc-icon">🔁</span><h3>Iteration</h3><p class="cc-teaser">Agents loop — try, observe, adjust, repeat.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-iter">Agents don't stop after one response. They loop: try something, observe the result, and try again. Multi-step tasks require the ability to course-correct. This iterative loop is fundamentally different from a one-shot chatbot exchange.</div></div>
+      <div class="cc" onclick="toggleCC(this,'c-adp')"><span class="cc-icon">🧬</span><h3>Adaptation</h3><p class="cc-teaser">Agents modify strategy based on feedback.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-adp">The agent modifies its strategy based on observed outcomes — not just retrying the same failing approach, but genuinely adjusting. This feedback-driven behavior separates autonomous systems from rigid automation.</div></div>
+      <div class="cc" onclick="toggleCC(this,'c-mem')"><span class="cc-icon">🧠</span><h3>Memory &amp; State</h3><p class="cc-teaser">Without memory there is no continuity.</p><p class="cc-hint">Tap to expand ↓</p><div class="cc-body" id="c-mem">Agents need three types: <strong>short-term</strong> (current context, recent actions), <strong>long-term</strong> (persistent facts, learned preferences), and <strong>task tracking</strong> (progress, pending actions). Remove any one and complex workflows collapse.</div></div>
+    </div>
+
+    <div class="hr"></div>
+    <span class="eyebrow">The Key Distinction</span>
+    <h2>Assistant <span class="red">vs.</span> Agent</h2>
+    <p class="lead" style="margin-bottom:20px">This is the most important distinction you need to be able to articulate fluently.</p>
+    <div class="cmp-wrap">
+      <div class="cmp-col">
+        <div class="cmp-head asst">💬 &nbsp;AI Assistant</div>
+        <div class="cmp-row"><span class="ic">—</span>Stateless interaction</div>
+        <div class="cmp-row"><span class="ic">—</span>Responds to a single prompt</div>
+        <div class="cmp-row"><span class="ic">—</span>Text in → text out only</div>
+        <div class="cmp-row"><span class="ic">—</span>No persistent memory</div>
+        <div class="cmp-row"><span class="ic">—</span>Waits for your next message</div>
+      </div>
+      <div class="cmp-col">
+        <div class="cmp-head agnt">🤖 &nbsp;AI Agent</div>
+        <div class="cmp-row"><span class="ic">→</span>Persistent goal pursuit</div>
+        <div class="cmp-row"><span class="ic">→</span>Executes multi-step plans</div>
+        <div class="cmp-row"><span class="ic">→</span>Tool-equipped — acts on the world</div>
+        <div class="cmp-row"><span class="ic">→</span>Maintains memory across steps</div>
+        <div class="cmp-row"><span class="ic">→</span>Loops until the goal is met</div>
+      </div>
+    </div>
+    <button class="btn btn-red" onclick="markDone('concepts');nav('loop')">Next: Agent Loop →</button>
+  </div>
+</div>
+
+<!-- LOOP -->
+<div class="section" id="s-loop">
+  <div class="wrap">
+    <span class="eyebrow">Section 02</span>
+    <h2>The <span class="red">Agent Loop</span></h2>
+    <p class="lead">Autonomy requires iteration — not a single pass. Click each step to understand what the agent is doing at that moment.</p>
+    <div class="loop-grid">
+      <div class="ls active" onclick="showStep(0)"><div class="ls-num">Step 01</div><span class="ls-icon">📥</span><div class="ls-label">Input</div></div>
+      <div class="ls" onclick="showStep(1)"><div class="ls-num">Step 02</div><span class="ls-icon">🎯</span><div class="ls-label">Interpret Goal</div></div>
+      <div class="ls" onclick="showStep(2)"><div class="ls-num">Step 03</div><span class="ls-icon">🗺</span><div class="ls-label">Plan</div></div>
+      <div class="ls" onclick="showStep(3)"><div class="ls-num">Step 04</div><span class="ls-icon">⚡</span><div class="ls-label">Act</div></div>
+      <div class="ls" onclick="showStep(4)"><div class="ls-num">Step 05</div><span class="ls-icon">👁</span><div class="ls-label">Observe</div></div>
+      <div class="ls" onclick="showStep(5)"><div class="ls-num">Step 06</div><span class="ls-icon">🔄</span><div class="ls-label">Adjust</div></div>
+      <div class="loop-repeat">↩ &nbsp;REPEAT UNTIL GOAL IS MET &nbsp;↩</div>
+    </div>
+    <div class="loop-detail" id="loopDetail"><strong>INPUT</strong> — A task or trigger starts the loop. This could be a user message, a scheduled event, an API call, or a detected system condition. The agent now has something concrete to work toward.</div>
+    <div class="ex-panel">
+      <div class="ex-head">🩺 &nbsp;Example: Healthcare Scheduling Agent</div>
+      <div class="ex-body">
+        <div class="ex-row"><div class="ex-tag">INPUT</div><div class="ex-text">Book a follow-up appointment for patient #3842 within 2 weeks.</div></div>
+        <div class="ex-row"><div class="ex-tag">INTERPRET</div><div class="ex-text">Patient needs a cardiologist within 14 days, preferably same provider.</div></div>
+        <div class="ex-row"><div class="ex-tag">PLAN</div><div class="ex-text">Check provider availability → filter by specialty → match patient insurance.</div></div>
+        <div class="ex-row"><div class="ex-tag">ACT</div><div class="ex-text">Query scheduling API. Search 3 providers. Identify open slot on Tuesday.</div></div>
+        <div class="ex-row"><div class="ex-tag">OBSERVE</div><div class="ex-text">Slot found, but conflicts with patient's stated preference (no Fridays) on file.</div></div>
+        <div class="ex-row"><div class="ex-tag">ADJUST</div><div class="ex-text">Search next non-Friday slot → book → send confirmation to patient and provider.</div></div>
+      </div>
+    </div>
+    <div class="hr"></div>
+    <button class="btn btn-red" onclick="markDone('loop');nav('quiz')">Next: Knowledge Check →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="section" id="s-quiz">
+  <div class="wrap">
+    <span class="eyebrow">Section 03</span>
+    <h2>Knowledge <span class="red">Check</span></h2>
+    <p class="lead">Test your understanding. You need 70% or higher to mark this section complete.</p>
+    <div id="quizActive">
+      <div class="qz-meta"><span id="qMeta">Question 1 of 7</span><span id="qScoreTxt">Score: 0 / 0</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="qProg" style="width:0%"></div></div>
+      <div class="card card-rb">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="q-opts" id="quizOpts"></div>
+        <div class="fb-box" id="quizFB"></div>
+        <div class="qz-foot">
+          <button class="btn btn-red" id="qNextBtn" onclick="nextQ()" style="display:none">Continue →</button>
+          <div class="qz-score" id="qz-s"></div>
+        </div>
+      </div>
+    </div>
+    <div id="quizDone" style="display:none">
+      <div class="card card-rb">
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Quiz Complete <span id="qBadge"></span></h3>
+        <p class="body-t" style="margin-bottom:20px" id="qMsg"></p>
+        <button class="btn btn-green" onclick="markDone('quiz');nav('builder')">Next: Build an Agent →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUILDER -->
+<div class="section" id="s-builder">
+  <div class="wrap">
+    <span class="eyebrow">Section 04</span>
+    <h2>Agent <span class="red">Design Studio</span></h2>
+    <p class="lead">Design your first autonomous agent. Every field maps to a real architectural component — leaving one blank weakens the design.</p>
+    <div class="card">
+      <div class="f-row">
+        <div class="f-group"><label class="f-lbl">Agent Name</label><input type="text" id="agentName" placeholder="e.g. SchedulerBot, ClaimNavigator…"/></div>
+        <div class="f-group"><label class="f-lbl">Industry / Domain</label>
+          <select id="agentDomain"><option value="">Select domain…</option><option>Healthcare</option><option>Finance</option><option>Customer Service</option><option>Operations / Supply Chain</option><option>HR / Recruiting</option><option>Marketing</option><option>Legal / Compliance</option><option>Education</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="f-group"><label class="f-lbl">Primary Goal <span class="f-hint">— What autonomous task will this agent complete?</span></label><textarea id="agentGoal" rows="2" placeholder="e.g. Automatically triage incoming patient messages, route to the right specialist, and schedule follow-ups without human intervention…"></textarea></div>
+      <div class="f-group"><label class="f-lbl">Perception <span class="f-hint">— What data or signals will the agent observe?</span></label><textarea id="agentPerception" rows="2" placeholder="e.g. EHR system updates, incoming Slack messages, calendar APIs, insurance eligibility database…"></textarea></div>
+      <div class="f-group"><label class="f-lbl">Tools <span class="f-hint">— Select all the agent will use</span></label>
+        <div class="chip-wrap" id="toolChips">
+          <div class="chip" onclick="toggleChip(this)">📧 Email / SMS</div>
+          <div class="chip" onclick="toggleChip(this)">🗄 Database Query</div>
+          <div class="chip" onclick="toggleChip(this)">📅 Calendar API</div>
+          <div class="chip" onclick="toggleChip(this)">🔌 REST API Calls</div>
+          <div class="chip" onclick="toggleChip(this)">💻 Code Execution</div>
+          <div class="chip" onclick="toggleChip(this)">📄 Doc Generation</div>
+          <div class="chip" onclick="toggleChip(this)">💬 Slack / Teams</div>
+          <div class="chip" onclick="toggleChip(this)">🤖 LLM Sub-agents</div>
+          <div class="chip" onclick="toggleChip(this)">🌐 Web Scraping</div>
+          <div class="chip" onclick="toggleChip(this)">💳 Payment Systems</div>
+        </div>
+      </div>
+      <div class="f-group"><label class="f-lbl">Guardrails <span class="f-hint">— What should this agent NEVER do?</span></label><textarea id="agentGuardrails" rows="2" placeholder="e.g. Never send a message on behalf of a physician. Never access records outside the patient's own files…"></textarea></div>
+      <div class="f-group" style="margin-bottom:20px"><label class="f-lbl">Human-in-the-Loop <span class="f-hint">— When does a human need to approve?</span></label><textarea id="agentHuman" rows="2" placeholder="e.g. Any case flagged as high-risk. Any action modifying existing records. Any message sent on behalf of a licensed professional…"></textarea></div>
+      <button class="btn btn-red" onclick="generateSpec()">⚙ Generate Agent Specification →</button>
+    </div>
+    <div class="spec-out" id="specOut"></div>
+    <div id="builderNext" style="display:none;margin-top:16px">
+      <button class="btn btn-green" onclick="markDone('builder');nav('risks')">Next: Risk Assessment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RISKS -->
+<div class="section" id="s-risks">
+  <div class="wrap">
+    <span class="eyebrow">Section 05</span>
+    <h2>Power, Limits &amp; <span class="red">Responsibility</span></h2>
+    <p class="lead">Autonomy increases both capability and attack surface. Every agent designer must understand these before deploying.</p>
+    <span class="eyebrow" style="margin-bottom:12px">Current Limitations</span>
+    <div class="risk-list">
+      <div class="risk-item"><div class="risk-icon">🧭</div><div class="risk-body"><h3>Long-Horizon Planning</h3><p>Agents lose coherence over extended multi-step tasks. They work well for 3–5 steps but degrade significantly beyond that. Design for shorter sub-tasks with human checkpoints.</p></div><div class="risk-lvl lvl-high">HIGH</div></div>
+      <div class="risk-item"><div class="risk-icon">💾</div><div class="risk-body"><h3>Stable Memory</h3><p>Context windows are limited. Persistent memory via vector DBs and RAG helps, but is imperfect. Agents can "forget" critical context mid-workflow on complex tasks.</p></div><div class="risk-lvl lvl-med">MED</div></div>
+      <div class="risk-item"><div class="risk-icon">🔄</div><div class="risk-body"><h3>Error Recovery</h3><p>When something goes wrong, agents often compound mistakes by retrying the same failing strategy. They need explicit error-handling logic — not just retry loops.</p></div><div class="risk-lvl lvl-high">HIGH</div></div>
+    </div>
+    <div class="hr"></div>
+    <span class="eyebrow" style="margin-bottom:12px">Security Threats</span>
+    <div class="risk-list">
+      <div class="risk-item"><div class="risk-icon">💉</div><div class="risk-body"><h3>Prompt Injection</h3><p>Malicious instructions embedded in data the agent reads — emails, documents, API responses — can hijack the agent's behavior entirely, turning it against its intended purpose.</p></div><div class="risk-lvl lvl-crit">CRITICAL</div></div>
+      <div class="risk-item"><div class="risk-icon">📤</div><div class="risk-body"><h3>Data Exfiltration</h3><p>An agent with broad data access can inadvertently expose sensitive information through API calls, log entries, or tool outputs. Apply the principle of least privilege — always.</p></div><div class="risk-lvl lvl-crit">CRITICAL</div></div>
+      <div class="risk-item"><div class="risk-icon">🔧</div><div class="risk-body"><h3>Tool Misuse</h3><p>Agents can use legitimate tools in unintended ways — deleting production data while "cleaning up," or sending messages to the wrong recipients at scale.</p></div><div class="risk-lvl lvl-high">HIGH</div></div>
+    </div>
+    <div class="hr"></div>
+    <span class="eyebrow" style="margin-bottom:12px">Responsible Design Checklist</span>
+    <div class="card"><div class="chk-list" id="chklist"></div></div>
+    <div style="margin-top:20px"><button class="btn btn-green" onclick="markDone('risks');nav('reflect')">Final Step: Exit Ticket →</button></div>
+  </div>
+</div>
+
+<!-- REFLECT -->
+<div class="section" id="s-reflect">
+  <div class="wrap">
+    <span class="eyebrow">Exit Ticket</span>
+    <h2>Your Lab <span class="red">Deliverable</span></h2>
+    <p class="lead">Synthesize what you've learned. Complete all three prompts thoughtfully — this is what you take out of the lab.</p>
+    <div class="card" style="margin-bottom:16px">
+      <div class="badge b-red" style="margin-bottom:12px">Prompt 01</div>
+      <div class="r-q">If you could deploy one autonomous agent in your organization tomorrow — what would it do?</div>
+      <div class="r-hint">Be specific: name the task, the tools it would need, and the guardrails you'd set.</div>
+      <textarea class="r-area" id="r1" placeholder="My agent would…&#10;&#10;It would need these tools: …&#10;&#10;The guardrails I'd set are: …&#10;&#10;A human would need to approve when: …"></textarea>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="badge b-yellow" style="margin-bottom:12px">Prompt 02</div>
+      <div class="r-q">What is the single most important thing you learned today that changed how you think about AI?</div>
+      <div class="r-hint">Before vs. after — what shifted in your mental model?</div>
+      <textarea class="r-area" id="r2" placeholder="Before today, I thought AI was…&#10;&#10;Now I understand that…&#10;&#10;This changes how I'd approach…"></textarea>
+    </div>
+    <div class="card" style="margin-bottom:24px">
+      <div class="badge b-blue" style="margin-bottom:12px">Prompt 03</div>
+      <div class="r-q">Given your agent idea, which security or reliability risk concerns you most — and how would you mitigate it?</div>
+      <div class="r-hint">Reference a specific risk type and your concrete mitigation plan.</div>
+      <textarea class="r-area" id="r3" placeholder="The risk I'm most concerned about is…&#10;&#10;Here's why it matters for my specific agent: …&#10;&#10;To mitigate it, I would…"></textarea>
+    </div>
+    <button class="btn btn-green" onclick="submitReflect()" id="submitBtn">Submit Exit Ticket ✓</button>
+    <div class="success-box" id="successBox" style="margin-top:20px">
+      🎉 <strong>Lab Complete — Well done!</strong><br/><br/>
+      You've finished Introduction to the Agentic AI Era. You defined the five pillars of autonomy, mapped the agent loop, passed the knowledge check, built an agent specification, and assessed the risks of autonomous systems.<br/><br/>
+      <span style="color:var(--gray-lt)">Keep your agent spec — you'll build on it in the next module: <strong style="color:#fff">Anatomy of an Agent</strong>.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const allSecs=['intro','concepts','loop','quiz','builder','risks','reflect'];
+let completed=new Set();
+
+function nav(id){
+  allSecs.forEach(s=>{
+    document.getElementById('s-'+s).classList.remove('active');
+    const t=document.getElementById('t-'+s);
+    if(t) t.classList.remove('active');
+  });
+  document.getElementById('s-'+id).classList.add('active');
+  const t=document.getElementById('t-'+id);
+  if(t) t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='quiz'&&!quizStarted) initQuiz();
+  if(id==='risks') buildChecklist();
+}
+
+function markDone(key){
+  completed.add(key);
+  document.getElementById('progressChip').textContent=completed.size+' / 5';
+  const d=document.getElementById('dot-'+key);
+  const l=document.getElementById('lbl-'+key);
+  if(d){d.className='rm-dot done';d.textContent='✓'}
+  if(l){l.className='rm-label done'}
+}
+
+// CONCEPTS
+function toggleCC(card,id){
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+
+// LOOP
+const loopData=[
+  {text:'<strong>INPUT</strong> — A task or trigger starts the loop. This could be a user message, a scheduled event, an API call, or a detected system condition. The agent now has something concrete to work toward.'},
+  {text:'<strong>INTERPRET GOAL</strong> — The agent parses its objective. What does "success" look like? It decomposes the request into something actionable and checks its memory for relevant context from previous steps or sessions.'},
+  {text:'<strong>PLAN</strong> — The agent decides what steps to take. It selects which tools to use, in what order, and what conditions would indicate the plan worked. This is genuine reasoning, not just pattern matching.'},
+  {text:'<strong>ACT</strong> — The agent executes its plan using tools. It queries APIs, reads databases, runs code, sends messages. This is where intention becomes real-world effect — and where unintended consequences can occur.'},
+  {text:'<strong>OBSERVE</strong> — The agent checks what actually happened after acting. Did the API return what was expected? Did the action succeed? Was there an error? This feedback signal drives the next decision.'},
+  {text:'<strong>ADJUST</strong> — Based on what was observed, the agent modifies its approach. If the plan worked, it moves forward. If not, it tries a new strategy — or escalates to a human. Then it <strong style="color:var(--GA-red)">REPEATS</strong>.'},
+];
+function showStep(i){
+  document.querySelectorAll('.ls').forEach((el,idx)=>{
+    if(!el.classList.contains('loop-repeat')) el.classList.toggle('active',idx===i);
+  });
+  document.getElementById('loopDetail').innerHTML=loopData[i].text;
+}
+
+// QUIZ
+const questions=[
+  {q:'What is the fundamental difference between an AI assistant and an AI agent?',opts:['Agents use larger language models','Agents pursue goals autonomously across multiple steps using tools and memory','Agents are more expensive to run','Agents can only work in healthcare'],ans:1,ok:'Correct! The core difference is goal-driven, multi-step autonomous execution — not model size or cost.',bad:'Not quite. The key distinction is autonomy: agents pursue objectives across multiple steps, use tools to take real actions, and maintain memory — not just generate text.'},
+  {q:'An autonomous system requires five core capabilities. Which of these is NOT one of them?',opts:['Goal Orientation','Social Media Access','Action Execution','Adaptation'],ans:1,ok:'Exactly right! The five pillars are: Goal Orientation, Decision-Making, Action Execution, Iteration, and Adaptation.',bad:'Think again. The five pillars are: Goal Orientation, Decision-Making, Action Execution, Iteration, and Adaptation. Social media access is a tool — not a pillar.'},
+  {q:'A ChatGPT conversation where you ask it to write an email is best described as:',opts:['Agentic AI','An AI Assistant','A multi-agent system','Autonomous execution'],ans:1,ok:'Right! A single-turn conversation with no tool access, no persistent memory, and no multi-step execution is an assistant — not an agent.',bad:'Close, but a single ChatGPT exchange is stateless and tool-less — that\'s an assistant. An agent would autonomously draft, send, and follow up.'},
+  {q:'Which security threat involves embedding malicious instructions inside data the agent reads, hijacking its behavior?',opts:['Data Exfiltration','Privilege Escalation','Prompt Injection','Tool Misuse'],ans:2,ok:'Correct! Prompt injection hides instructions in content the agent processes — turning the agent against its intended purpose.',bad:'Prompt injection is the answer here. Malicious instructions hidden in data the agent reads can fully override the agent\'s intended behavior.'},
+  {q:'"Human-in-the-Loop" in responsible agent design means:',opts:['A human writes all the agent\'s code','Critical decisions require human approval before the agent acts','The agent sends daily reports to a human','Humans train the model continuously'],ans:1,ok:'Exactly right! High-stakes decisions pause for human approval — ensuring accountability without removing the automation benefit.',bad:'Not quite. Human-in-the-loop means the agent pauses on high-stakes decisions and requires explicit human approval before proceeding.'},
+  {q:'What makes the Agent Loop fundamentally different from a chatbot response?',opts:['The loop uses GPT-4','The loop repeats — observe, adjust, act again — until the goal is met','The loop runs faster','The loop always involves multiple users'],ans:1,ok:'Exactly! The loop is what creates autonomy. The agent doesn\'t stop after one response — it iterates until the objective is achieved.',bad:'The key insight is the LOOP itself. Unlike a chatbot, an agent cycles: plan → act → observe → adjust → repeat — until the goal is met.'},
+  {q:'Which is a real limitation of today\'s agentic AI systems?',opts:['They cannot process text','They can only work in English','Long-horizon planning degrades significantly after a few steps','They cannot access the internet'],ans:2,ok:'Correct! Current agents work well for short multi-step tasks but lose coherence over longer planning horizons — this is an active research frontier.',bad:'The real limitation is long-horizon planning. Agents degrade significantly over extended multi-step tasks, not language or internet constraints.'},
+];
+let qIdx=0,qScore=0,quizStarted=false,qAnswered=false;
+function initQuiz(){quizStarted=true;qIdx=0;qScore=0;showQ()}
+function showQ(){
+  qAnswered=false;
+  const q=questions[qIdx];
+  document.getElementById('qProg').style.width=(qIdx/questions.length*100)+'%';
+  document.getElementById('qMeta').textContent='Question '+(qIdx+1)+' of '+questions.length;
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+qIdx;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizFB').className='fb-box';
+  document.getElementById('quizFB').innerHTML='';
+  document.getElementById('qNextBtn').style.display='none';
+  const L=['A','B','C','D'];
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>
+    `<button class="q-opt" onclick="answerQ(${i})" id="opt${i}"><div class="opt-k">${L[i]}</div>${o}</button>`
+  ).join('');
+}
+function answerQ(i){
+  if(qAnswered) return;
+  qAnswered=true;
+  const q=questions[qIdx];
+  const ok=i===q.ans;
+  if(ok) qScore++;
+  document.querySelectorAll('.q-opt').forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===q.ans) el.classList.add('correct');
+    else if(idx===i&&!ok) el.classList.add('wrong');
+  });
+  const fb=document.getElementById('quizFB');
+  fb.innerHTML=`<span class="fb-icon">${ok?'✓':'✗'}</span><span>${ok?q.ok:q.bad}</span>`;
+  fb.className='fb-box show '+(ok?'ok':'bad');
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+(qIdx+1);
+  document.getElementById('qNextBtn').style.display='inline-flex';
+  if(qIdx===questions.length-1) document.getElementById('qNextBtn').textContent='See Results →';
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=questions.length){showResults();return}
+  showQ();
+}
+function showResults(){
+  document.getElementById('quizActive').style.display='none';
+  document.getElementById('quizDone').style.display='block';
+  const pct=Math.round(qScore/questions.length*100);
+  document.getElementById('qBadge').innerHTML=`<span class="badge ${pct>=70?'b-green':'b-red'}">${qScore}/${questions.length} · ${pct}%</span>`;
+  document.getElementById('qMsg').textContent=pct>=70
+    ?`Strong work! You scored ${pct}%. You understand the core distinction between agents and assistants, how the agent loop drives autonomy, and the risks that come with it.`
+    :`You scored ${pct}%. Review the Concepts and Agent Loop sections, then try again. Focus on the 5 pillars of autonomy and the assistant vs. agent distinction.`;
+  if(pct>=70) markDone('quiz');
+}
+
+// BUILDER
+function toggleChip(el){el.classList.toggle('on')}
+function generateSpec(){
+  const name=document.getElementById('agentName').value||'[Unnamed]';
+  const domain=document.getElementById('agentDomain').value||'[Not set]';
+  const goal=document.getElementById('agentGoal').value||'[Not defined]';
+  const perc=document.getElementById('agentPerception').value||'[Not defined]';
+  const tools=[...document.querySelectorAll('.chip.on')].map(el=>el.textContent.trim()).join(', ')||'[None selected]';
+  const guard=document.getElementById('agentGuardrails').value||'[Not defined]';
+  const hitl=document.getElementById('agentHuman').value||'[Not defined]';
+  const out=`╔═══════════════════════════════════════╗
+  AGENT SPECIFICATION  —  BAA 1.0 LAB
+╚═══════════════════════════════════════╝
+
+AGENT NAME:   ${name}
+DOMAIN:       ${domain}
+
+─────────────────────────────────────
+ AUTONOMY ARCHITECTURE
+─────────────────────────────────────
+
+[GOAL — What it's pursuing]
+${goal}
+
+[PERCEPTION — What it observes]
+${perc}
+
+[TOOLS — How it acts on the world]
+${tools}
+
+[GUARDRAILS — What it must never do]
+${guard}
+
+[HUMAN-IN-THE-LOOP — When to pause]
+${hitl}
+
+─────────────────────────────────────
+ 5-PILLAR AUTONOMY CHECK
+─────────────────────────────────────
+
+ Goal Orientation   → ${goal.length>10?'✓ DEFINED':'⚠ NEEDS DETAIL'}
+ Decision-Making    → ✓ Embedded in LLM reasoning layer
+ Action Execution   → ${tools!=='[None selected]'?'✓ TOOLS ASSIGNED':'⚠ NO TOOLS — add tools!'}
+ Iteration          → ✓ Agent loop: observe → adjust → repeat
+ Adaptation         → ✓ Feedback from tool results drives next step
+
+─────────────────────────────────────
+ SAFETY CHECK
+─────────────────────────────────────
+
+ Guardrails         → ${guard.length>10?'✓ DEFINED':'⚠ NEEDS ATTENTION'}
+ Human-in-the-Loop  → ${hitl.length>10?'✓ DEFINED':'⚠ NEEDS ATTENTION'}
+ Logging strategy   → Define in Architecture phase
+
+─────────────────────────────────────
+ NOTE: Remove any component above →
+ autonomy collapses. Design determines safety.
+─────────────────────────────────────`;
+  const el=document.getElementById('specOut');
+  el.textContent=out;el.className='spec-out show';
+  document.getElementById('builderNext').style.display='block';
+  markDone('builder');
+}
+
+// CHECKLIST
+const chkItems=['Human approval required for all high-stakes decisions','Every agent action logged with timestamp and decision rationale','Real-time monitoring dashboard configured','Success KPIs defined BEFORE deployment — not after','Safe fallback and graceful failure mechanism in place','Prompt injection mitigations tested and validated','Principle of least privilege applied to all tool access','Accountable human owner identified (who gets paged when it breaks?)'];
+let chkBuilt=false;
+function buildChecklist(){
+  if(chkBuilt) return;chkBuilt=true;
+  const el=document.getElementById('chklist');
+  el.innerHTML=chkItems.map((txt,i)=>`
+    <div class="chk-item" onclick="tickItem(${i})" id="ci${i}">
+      <div class="chk-box" id="cb${i}"></div>
+      <div class="chk-txt" id="ct${i}">${txt}</div>
+    </div>`).join('');
+}
+function tickItem(i){
+  const b=document.getElementById('cb'+i),t=document.getElementById('ct'+i);
+  const on=b.classList.contains('ticked');
+  if(on){b.classList.remove('ticked');b.textContent='';t.classList.remove('ticked')}
+  else{b.classList.add('ticked');b.textContent='✓';t.classList.add('ticked')}
+}
+
+// REFLECT
+function submitReflect(){
+  if(!document.getElementById('r1').value.trim()||!document.getElementById('r2').value.trim()||!document.getElementById('r3').value.trim()){
+    alert('Please complete all three reflection prompts before submitting.');return;
+  }
+  document.getElementById('successBox').className='success-box show';
+  document.getElementById('submitBtn').style.display='none';
+  markDone('reflect');
+  const d=document.getElementById('dot-reflect');
+  const l=document.getElementById('lbl-reflect');
+  if(d){d.className='rm-dot done';d.textContent='✓'}
+  if(l){l.className='rm-label done'}
+}
+</script>
+</body>
+</html>
