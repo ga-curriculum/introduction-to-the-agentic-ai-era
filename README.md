@@ -198,7 +198,7 @@ After redesigning with API tool integration, session memory, a decision loop, an
 ---
 
 ## 5. Lab (60 min)
-
+-https://pages.git.generalassemb.ly/Build-AI-Agents/Introduction-to-the-Agentic-AI-Era/
 ---
 
 ## 6. Wrap-Up & Reflection (5 min)
