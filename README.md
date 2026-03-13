@@ -222,4 +222,4 @@ Next session: **Anatomy of an Agent**
 
   ---
 
-*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
+*General Assembly · Build AI Agents · BAA 1.0 · © 2026*
