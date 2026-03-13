@@ -219,3 +219,7 @@ Next session: **Anatomy of an Agent**
 - Russell & Norvig — *Artificial Intelligence: A Modern Approach* (Chapter 2: Intelligent Agents)
 - Sculley et al. — *Hidden Technical Debt in Machine Learning Systems*
 - [LangChain Agent Docs](https://docs.langchain.com/docs/components/agents)
+
+  ---
+
+*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
